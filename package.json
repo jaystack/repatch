@@ -1,24 +1,22 @@
 {
   "name": "repatch",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Dispatch reducers",
   "main": "lib/store/index",
   "typings": "lib/store/index",
   "scripts": {
     "build": "node_modules/.bin/tsc -p src/store --outDir lib/store",
     "build:w": "node_modules/.bin/tsc -w -p src/store --outDir lib/store",
     "build-tests": "node_modules/.bin/tsc -p src/test --outDir lib",
-    "build-tests:w": "node_modules/.bin/tsc -p -w src/test --outDir lib",
+    "build-tests:w": "node_modules/.bin/tsc -w -p src/test --outDir lib",
     "build-example": "node_modules/.bin/tsc -p src/examples/general --outDir lib",
-    "build-example:w": "node_modules/.bin/tsc  -w -p src/examples/general --outDir lib",
+    "build-example:w": "node_modules/.bin/tsc -w -p src/examples/general --outDir lib",
     "example": "node lib/examples/general",
     "pretest": "npm run build-tests",
     "test": "node_modules/.bin/mocha lib/test/**/*.spec.js -c",
     "start": "node ."
   },
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
