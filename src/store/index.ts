@@ -43,7 +43,7 @@ export default class Store<State> {
     return this;
   };
 
-  applyMiddlewares = (reducer: Reducer<State>): Reducer<State> =>
+  private applyMiddlewares = (reducer: Reducer<State>): Reducer<State> =>
     <Reducer<State>>this.middlewares.reduce(
       (prevReducer, middleware) => middleware(this, prevReducer),
       reducer
