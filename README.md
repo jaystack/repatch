@@ -2,7 +2,7 @@
 
 ## Dispatch reducers
 
-The most of projects do not need sctrict action administration. Action types, action creators and reducers' action handlers are mutually assigned to each other.
+The most of redux projects do not need sctrict action administration. Action types, action creators and reducers' action handlers are mutually assigned to each other.
 
 The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
 
@@ -41,7 +41,7 @@ store.dispatch(resolveFetchingUsers(users));
 In async actions reducer returns a function (*delegate*).
 
 ```javascript
-const updateUser = (delta) => (state) => async (dispatch, getState) => {
+const updateUser = delta => state => async (dispatch, getState) => {
   const editedUserId = getState().editedUser;
   dispatch(toggleSpinner(true));
   await api.updateUser(editedUserId, delta);
