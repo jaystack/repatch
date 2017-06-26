@@ -1,4 +1,3 @@
-export type Dispatcher<State> = (reducer: Reducer<State>) => any;
 export type Reducer<State> = (state: State) => State;
 export type Listener = () => void;
 export type Unsubscribe = () => void;
@@ -6,6 +5,9 @@ export type Middleware<State> = (
   store: Store<State>,
   reducer: Reducer<State>
 ) => Reducer<State>;
+import thunkMiddleware from './middlewares/thunk';
+
+export const thunk = thunkMiddleware;
 
 export default class Store<State> {
   private state: State;
@@ -16,17 +18,16 @@ export default class Store<State> {
     this.state = initialState;
   }
 
-  getState: () => State = () => this.state;
+  getState = (): State => this.state;
 
-  dispatch: Dispatcher<State> = (reducer) => {
+  dispatch = (reducer: any): any => {
     assertReducer(reducer);
-    const result = this.applyMiddlewares(reducer)(this.state);
-    /*const result = reducer(this.state);
-    if (typeof result === 'function')
-      return result(this.dispatch, this.getState);*/
-    this.state = result;
-    this.listeners.forEach((listener) => listener());
-    return reducer;
+    const finalReducer = this.applyMiddlewares(reducer);
+    if (typeof finalReducer === 'function') {
+      this.state = finalReducer(this.state);
+      this.listeners.forEach((listener) => listener());
+    }
+    return finalReducer;
   };
 
   subscribe = (listener: Listener): Unsubscribe => {
