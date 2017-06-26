@@ -1,6 +1,7 @@
 export type Dispatcher<State> = (reducer: Reducer<State>) => any;
+export type Delegate<State> = (dispatch: Dispatcher<State>, getState: () => State) => any;
 export type SyncReducer<State> = (state: State) => State;
-export type AsyncReducer<State> = (state: State) => (dispatch: Dispatcher<State>, getState: () => State) => any;
+export type AsyncReducer<State> = (state: State) => Delegate<State>;
 export type Reducer<State> = SyncReducer<State> | AsyncReducer<State>;
 export type Listener = () => void;
 export type Unsubscribe = () => void;
