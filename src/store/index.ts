@@ -1,7 +1,9 @@
-export type Dispatcher = (reducer: Reducer<any>) => any;
+export type Dispatcher<State> = (reducer: Reducer<State>) => any;
 export type SyncReducer<State> = (state: State) => State;
-export type AsyncReducer<State> = (state: State) => (dispatch: Dispatcher) => any;
+export type AsyncReducer<State> = (state: State) => (dispatch: Dispatcher<State>, getState: () => State) => any;
 export type Reducer<State> = SyncReducer<State> | AsyncReducer<State>;
+export type Listener = () => void;
+export type Unsubscribe = () => void;
 //export type Middleware<State> = (store: Store<State>, reducer: Reducer<State>) => void;
 
 export default class Store<State> {
@@ -15,7 +17,7 @@ export default class Store<State> {
 
 	getState: () => State = () => this.state;
 
-	dispatch: Dispatcher = (reducer) => {
+	dispatch: Dispatcher<State> = (reducer) => {
 		assertReducer(reducer);
 		//const result = this.applyMiddlewares(reducer)(this.state);
 		const result = reducer(this.state);
@@ -25,7 +27,7 @@ export default class Store<State> {
 		return reducer;
 	};
 
-	subscribe: (Function) => Function = (listener) => {
+	subscribe = (listener: Listener): Unsubscribe => {
 		assertListener(listener);
 		this.listeners = [ ...this.listeners, listener ];
 		return () => (this.listeners = this.listeners.filter((lis) => lis !== listener));
@@ -45,7 +47,7 @@ function assertReducer(reducer: Reducer<any>) {
 		throw new Error('Reducer is not a function: dispatch takes only reducers as functions.');
 }
 
-function assertListener(listener: Function) {
+function assertListener(listener: Listener) {
 	if (typeof listener !== 'function')
 		throw new Error('Listener is not a function: subscribe takes only listeners as functions.');
 }
