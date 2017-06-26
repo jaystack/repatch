@@ -6,7 +6,7 @@ The most of redux projects do not need sctrict action administration. Action typ
 
 The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
 
-So we have only actions which returns reducers.
+So we have only actions which return reducers.
 
 ```javascript
 const resolveFetchingUsers = users => state => ({
@@ -68,7 +68,7 @@ const store = new Store({
 });
 ```
 
-Then we can make a subredcer for the `userManager` section:
+Then we can make a subredcer for the `userManagement` section:
 
 ```javascript
 const reduceUserManagement = reducer => state => ({
