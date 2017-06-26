@@ -15,6 +15,8 @@ export const addUser = (user) => {
   return Promise.resolve();
 };
 export const updateUser = (username, delta) => {
-  users = users.map((user) => (user.username === username ? { ...user, ...delta } : user));
+  users = users.map(
+    (user) => (user.username === username ? { ...user, ...delta } : user)
+  );
   return Promise.resolve();
 };

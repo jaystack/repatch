@@ -33,7 +33,10 @@ export const fetchUsers = () => (state) => async (dispatch, getState) => {
   }
 };
 
-export const addUser = (user: User) => (state) => async (dispatch, getState) => {
+export const addUser = (user: User) => (state) => async (
+  dispatch,
+  getState
+) => {
   try {
     if (!getState().isFetching) dispatch(startFetching());
     await api.addUser(user);
