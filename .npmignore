@@ -1,6 +1,7 @@
 /node_modules
 /src
 /lib/test
+/lib/examples
 /.vscode
 /log
 *.log
