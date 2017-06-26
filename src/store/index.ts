@@ -1,14 +1,11 @@
 export type Dispatcher<State> = (reducer: Reducer<State>) => any;
-export type Delegate<State> = (
-  dispatch: Dispatcher<State>,
-  getState: () => State
-) => any;
-export type SyncReducer<State> = (state: State) => State;
-export type AsyncReducer<State> = (state: State) => Delegate<State>;
-export type Reducer<State> = SyncReducer<State> | AsyncReducer<State>;
+export type Reducer<State> = (state: State) => State;
 export type Listener = () => void;
 export type Unsubscribe = () => void;
-//export type Middleware<State> = (store: Store<State>, reducer: Reducer<State>) => void;
+export type Middleware<State> = (
+  store: Store<State>,
+  reducer: Reducer<State>
+) => Reducer<State>;
 
 export default class Store<State> {
   private state: State;
@@ -23,10 +20,10 @@ export default class Store<State> {
 
   dispatch: Dispatcher<State> = (reducer) => {
     assertReducer(reducer);
-    //const result = this.applyMiddlewares(reducer)(this.state);
-    const result = reducer(this.state);
+    const result = this.applyMiddlewares(reducer)(this.state);
+    /*const result = reducer(this.state);
     if (typeof result === 'function')
-      return result(this.dispatch, this.getState);
+      return result(this.dispatch, this.getState);*/
     this.state = result;
     this.listeners.forEach((listener) => listener());
     return reducer;
@@ -39,13 +36,17 @@ export default class Store<State> {
       (this.listeners = this.listeners.filter((lis) => lis !== listener));
   };
 
-  /*addMiddleware: (...middlewares: Middleware<State>[]) => this = (...middlewares) => {
-		this.middlewares = [ ...this.middlewares, ...middlewares ];
-		return this;
-	};
+  addMiddleware = (...middlewares: Middleware<State>[]): this => {
+    assertMiddlewares(middlewares);
+    this.middlewares = [ ...this.middlewares, ...middlewares ];
+    return this;
+  };
 
-	applyMiddlewares: (reducer: Reducer<State>) => Reducer<State> = (reducer) =>
-		<Reducer<State>>this.middlewares.reduce((prevReducer, middleware) => middleware(this, reducer), reducer);*/
+  applyMiddlewares = (reducer: Reducer<State>): Reducer<State> =>
+    <Reducer<State>>this.middlewares.reduce(
+      (prevReducer, middleware) => middleware(this, prevReducer),
+      reducer
+    );
 }
 
 function assertReducer(reducer: Reducer<any>) {
@@ -62,9 +63,10 @@ function assertListener(listener: Listener) {
     );
 }
 
-/*function assertMiddlewares(middlewares: Function[]) {
-	middlewares.forEach((middleware) => {
-		if (typeof middleware !== 'function')
-			throw new Error('Middleware is not a function: addMiddleware takes only middlewares as functions.');
-	});
-}*/
+function assertMiddlewares(middlewares: Middleware<any>[]) {
+  if (middlewares.some((middleware) => typeof middleware !== 'function')) {
+    throw new Error(
+      'Middleware is not a function: addMiddleware takes only middlewares as functions.'
+    );
+  }
+}
