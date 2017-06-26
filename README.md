@@ -6,6 +6,8 @@ The most of redux projects do not need sctrict action administration. Action typ
 
 The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
 
+So we have only actions which returns reducers.
+
 ```javascript
 const resolveFetchingUsers = users => state => ({
   ...state,
@@ -25,7 +27,7 @@ npm install repatch
 ```javascript
 import Store from 'repatch';
 
-const store = new Store(initialState)
+const store = new Store(initialState);
 ```
 
 Repatch's interface is the same as Redux, therefore you can use with `react-redux`.
@@ -63,7 +65,7 @@ const store = new Store({
     isFetching: false,
     error: null 
   }
-})
+});
 ```
 
 Then we can make a subredcer for the `userManager` section:
