@@ -1,6 +1,6 @@
 {
   "name": "repatch",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Dispatch reducers",
   "main": "lib/store/index",
   "typings": "lib/store/index",
