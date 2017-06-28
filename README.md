@@ -27,15 +27,23 @@ npm install repatch
 ```javascript
 import Store from 'repatch';
 
-const store = new Store(initialState);
+const store = new Store(<initialState>);
+```
+
+In CommonJS format you should use:
+
+```javascript
+const Store = require('repatch').default;
 ```
 
 Repatch's interface is the same as Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).
 
 ```javascript
-store.subscribe(() => console.log(store.getState()));
+const unsubscribe = store.subscribe(() => console.log(store.getState()));
 
 store.dispatch(resolveFetchingUsers(users));
+
+unsubscribe();
 ```
 
 ## Subreducers
@@ -81,7 +89,7 @@ A repatch middleware takes the store instance and the previous reducer and retur
 Use `addMiddleware` method to chaining middlewares:
 
 ```javascript
-const store = new Store(initialState)
+const store = new Store(<initialState>)
   .addMiddleware(mw1)
   .addMiddleware(mw2, mw3);
 ```
@@ -93,7 +101,7 @@ The `thunk` middleware is useful for handling async actions similar to [redux-th
 ```javascript
 import Store, { thunk } from 'repatch';
 
-const store = new Store(initialState).addMiddleware(thunk());
+const store = new Store(<initialState>).addMiddleware(thunk);
 ```
 
 In thunk async actions reducer returns a function (*delegate*):
@@ -114,7 +122,9 @@ It is possible to embed async actions within each other too and awaiting their r
 await dispatch(fetchUsers());
 ```
 
-### Extra arguments
+You can access `thunk` as static member of `Store` too: `Store.thunk`
+
+### Injecting extra argument
 
 It is possible to inject extra arguments into async actions:
 
@@ -123,14 +133,15 @@ import Store, { thunk } from 'repatch';
 import api from './api';
 import hashHistory from 'react-router';
 
-const store = new Store(initialState).addMiddleware(thunk(api, hashHistory));
+const store = new Store(<initialState>)
+  .addMiddleware(thunk.withExtraArgument({ api, hashHistory }));
 ```
 
 Then you can access these arguments in your delegates:
 
 ```javascript
 const updateUser = delta => state =>
-  async (dispatch, getState, api, hashHistory) => {
+  async (dispatch, getState, { api, hashHistory }) => {
     // ...
   }
 ```

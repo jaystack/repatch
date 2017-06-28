@@ -5,8 +5,12 @@ import Store, { thunk } from '../store';
 process.env.NODE_ENV = 'test';
 
 describe('thunk', () => {
+  it('as Store static member', () => {
+    assert.strictEqual(Store.thunk, thunk);
+  });
+
   it('dispatch invokes the delegate', () => {
-    const store = new Store(1).addMiddleware(thunk());
+    const store = new Store(1).addMiddleware(thunk);
     assert.strictEqual(store.getState(), 1);
     store.dispatch((state) => (dispatch, getState) => {
       store.dispatch((state) => getState() + 1);
@@ -15,7 +19,7 @@ describe('thunk', () => {
   });
 
   it('dispatch returns the delegate', () => {
-    const store = new Store(1).addMiddleware(thunk());
+    const store = new Store(1).addMiddleware(thunk);
     const expected = 8;
     assert.strictEqual(
       store.dispatch((state) => (dispatch) => {
@@ -28,7 +32,7 @@ describe('thunk', () => {
 
   it('extra arguments are provided', () => {
     const add = (a, b) => a + b;
-    const store = new Store(1).addMiddleware(thunk(add));
+    const store = new Store(1).addMiddleware(thunk.withExtraArgument(add));
     store.dispatch((state) => (dispatch, getState, add) => {
       store.dispatch((state) => add(state, 1));
     });

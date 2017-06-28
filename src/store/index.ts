@@ -1,15 +1,17 @@
-export type Reducer<State> = (state: State) => State;
-export type Listener = () => void;
-export type Unsubscribe = () => void;
-export type Middleware<State> = (
-  store: Store<State>,
-  reducer: Reducer<State>
-) => Reducer<State>;
-import thunkMiddleware from './middlewares/thunk';
+import {
+  Store as IStore,
+  Listener,
+  Unsubscribe,
+  Middleware,
+  Reducer
+} from './types';
+import thunkMiddleware, { Thunk } from './middlewares/thunk';
 
 export const thunk = thunkMiddleware;
 
-export default class Store<State> {
+export default class Store<State> implements IStore<State> {
+  static thunk = thunkMiddleware;
+
   private state: State;
   private listeners: Function[] = [];
   private middlewares: Function[] = [];
