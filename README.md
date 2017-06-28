@@ -30,7 +30,7 @@ import Store from 'repatch';
 const store = new Store(initialState);
 ```
 
-Repatch's interface is the same as Redux, therefore you can use with `react-redux`.
+Repatch's interface is the same as Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).
 
 ```javascript
 store.subscribe(() => console.log(store.getState()));
@@ -88,7 +88,7 @@ const store = new Store(initialState)
 
 ## Async actions
 
-The `thunk` middleware is useful for handling async actions similar to `redux-thunk`.
+The `thunk` middleware is useful for handling async actions similar to [redux-thunk](https://www.npmjs.com/package/redux-thunk).
 
 ```javascript
 import Store, { thunk } from 'repatch';
