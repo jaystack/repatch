@@ -7,6 +7,7 @@ import {
 } from './types';
 import thunkMiddleware, { Thunk } from './middlewares/thunk';
 
+export * from './types';
 export const thunk = thunkMiddleware;
 
 export default class Store<State> implements IStore<State> {
