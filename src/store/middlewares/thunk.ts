@@ -19,7 +19,7 @@ export interface ThunkReducer<State, ExtraArgument, T> {
   (state: State): Delegate<State, ExtraArgument, T>;
 }
 
-export interface ThunkDispatch<State, ExtraArgument> {
+export interface ThunkDispatch<State, ExtraArgument> extends Dispatch<State> {
   <T>(reducer: ThunkReducer<State, ExtraArgument, T>): T;
 }
 
