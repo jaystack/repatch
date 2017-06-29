@@ -1,4 +1,4 @@
-import { Middleware, GetState } from '../types';
+import { Middleware, GetState, Dispatch, Reducer } from '../types';
 
 export interface ThunkMiddleware<State, ExtraArgument>
   extends Middleware<State> {
@@ -8,14 +8,18 @@ export interface ThunkMiddleware<State, ExtraArgument>
 }
 
 export type Delegate<State, ExtraArgument> = (
-  dispatch: (reducer: ThunkReducer<State, ExtraArgument>) => any,
+  dispatch: ThunkDispatch<State, ExtraArgument>,
   getState: GetState<State>,
   extraArgument: ExtraArgument
 ) => any;
 
 export type ThunkReducer<State, ExtraArgument> = (
   state: State
-) => State | Delegate<State, ExtraArgument>;
+) => Delegate<State, ExtraArgument>;
+
+export interface ThunkDispatch<State, ExtraArgument> extends Dispatch<State> {
+  (reducer: ThunkReducer<State, ExtraArgument>): any;
+}
 
 export type Thunk<State, ExtraArgument> = (
   state: State
