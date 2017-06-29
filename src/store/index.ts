@@ -3,12 +3,15 @@ import {
   Listener,
   Unsubscribe,
   Middleware,
-  Reducer
+  Reducer,
+  Dispatch,
+  GetState
 } from './types';
 import thunk, { ThunkMiddleware, Thunk } from './middlewares/thunk';
 
 export * from './types';
-export { thunk, ThunkMiddleware, Thunk };
+export * from './middlewares/thunk';
+export { thunk };
 
 export default class Store<State> implements IStore<State> {
   static thunk = thunk;
@@ -21,7 +24,7 @@ export default class Store<State> implements IStore<State> {
     this.state = initialState;
   }
 
-  getState = (): State => this.state;
+  getState: GetState<State> = () => this.state;
 
   dispatch = (reducer: any): any => {
     assertReducer(reducer);
