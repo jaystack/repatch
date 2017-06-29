@@ -5,13 +5,13 @@ import {
   Middleware,
   Reducer
 } from './types';
-import thunkMiddleware, { Thunk } from './middlewares/thunk';
+import thunk, { ThunkMiddleware, Thunk } from './middlewares/thunk';
 
 export * from './types';
-export const thunk = thunkMiddleware;
+export { thunk, ThunkMiddleware, Thunk };
 
 export default class Store<State> implements IStore<State> {
-  static thunk = thunkMiddleware;
+  static thunk = thunk;
 
   private state: State;
   private listeners: Function[] = [];
