@@ -6,8 +6,8 @@ export interface Reducer<State> {
   (state: State): State;
 }
 
-export interface Dispatch<State> {
-  <R extends Reducer<State>>(reducer: R): R;
+export interface Dispatch<Reducer> {
+  (reducer: Reducer): Reducer;
 }
 
 export interface Listener {
@@ -22,9 +22,9 @@ export interface Middleware<State> {
   (store: Store<State>, reducer: Reducer<State>): Reducer<State>;
 }
 
-export interface Store<State> {
+export interface Store<State, R = Reducer<State>> {
   getState: GetState<State>;
-  dispatch: Dispatch<State>;
+  dispatch: Dispatch<R>;
   subscribe(listener: Listener): Unsubscribe;
-  addMiddleware(...middlewares: Middleware<State>[]): this;
+  addMiddleware<R2>(...middlewares: Middleware<State>[]): Store<State, R | R2>;
 }

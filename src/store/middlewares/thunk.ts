@@ -1,4 +1,4 @@
-import { Middleware, GetState, Dispatch, Reducer } from '../types';
+import { Middleware, GetState, Dispatch, Reducer, Store } from '../types';
 
 export interface ThunkMiddleware<State, ExtraArgument>
   extends Middleware<State> {
@@ -15,26 +15,23 @@ export interface Delegate<State, ExtraArgument, T> {
   ): T;
 }
 
-export interface ThunkReducer<State, ExtraArgument, T> {
-  (state: State): Delegate<State, ExtraArgument, T>;
-}
-
-export interface ThunkDispatch<State, ExtraArgument> extends Dispatch<State> {
-  <T>(reducer: ThunkReducer<State, ExtraArgument, T>): T;
+export interface ThunkDispatch<State, ExtraArgument>
+  extends Dispatch<Reducer<State>> {
+  <T>(reducer: Thunk<State, ExtraArgument, T>): T;
 }
 
 export interface Thunk<State, ExtraArgument, T> {
   (state: State): Delegate<State, ExtraArgument, T>;
 }
 
-function thunkFactory(extraArgument?: any): ThunkMiddleware<any, any> {
+function thunkFactory<T>(extraArgument?: T): ThunkMiddleware<any, T> {
   const thunk = ((store, reducer) => {
     const state = store.getState();
     const result = reducer(state);
     return typeof result === 'function'
       ? result(store.dispatch, store.getState, extraArgument)
       : reducer;
-  }) as ThunkMiddleware<any, any>;
+  }) as ThunkMiddleware<any, T>;
   thunk.withExtraArgument = thunkFactory;
   return thunk;
 }
