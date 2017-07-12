@@ -182,7 +182,8 @@ const mockApi = {
 
 it('fetchUsers', async () => {
   const state = { users: [] };
-  const store = new Store(state).addMiddleware(thunk(mockApi));
+  const store = new Store(state)
+    .addMiddleware(thunk.withExtraArgument(mockApi));
   await store.dispatch(fetchUsers());
   const nextState = store.getState();
   assert.deepEqual(nextState.users, mockUsers);
