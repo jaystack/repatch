@@ -156,7 +156,7 @@ Sync actions' testing is easy:
 
 ```javascript
 import * as assert from 'assert';
-import changeName from './actions';
+import { changeName } from './actions';
 
 // ...
 
@@ -172,6 +172,7 @@ For async action tests you need to instantiate the `Store`:
 ```javascript
 import Store, { thunk } from 'repatch';
 import * as assert from 'assert';
+import { fetchUsers } from './actions';
 
 const mockUsers = [{ username: 'john' }];
 const mockApi = {
