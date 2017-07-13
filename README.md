@@ -2,11 +2,11 @@
 
 ## Dispatch reducers
 
-The most of redux projects do not need sctrict action administration. Action types, action creators and reducers' action handlers are mutually assigned to each other.
+[Redux](https://www.npmjs.com/package/redux) has a verbose action management. The most of redux projects do not need sctrict action administration. Action types, action creators and the reducer's action handlers are mutually assigned to each other. Repatch's purpose is creating actions briefly.
 
 The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
 
-So we have only actions which return reducers.
+In this terminology action is a function that returns a reducer.
 
 ```javascript
 const resolveFetchingUsers = users => state => ({
@@ -16,11 +16,22 @@ const resolveFetchingUsers = users => state => ({
 });
 ```
 
+Following this thread an inline action looks like this:
+
+```javascript
+dispatch(state => ({ ...state, isFetching: true }))
+```
+
 ## Installation
 
 ```
 npm install repatch
 ```
+
+## Examples
+
+- [JavaScript example](https://github.com/jaystack/repatch-example-electron-app)
+- [TypeScript example](https://github.com/jaystack/repatch-example-electron-app-ts)
 
 ## How to use
 
@@ -46,36 +57,20 @@ store.dispatch(resolveFetchingUsers(users));
 unsubscribe();
 ```
 
-## Subreducers
+## Sub-reducers
 
-We do not need to reduce always the whole state of the store. A good practice to avoid this effort is using subreducers.
-
-Let's suppose we have the following state:
+We do not need to reduce always the whole state of the store. A good practice to avoid this effort is using sub-reducers.
 
 ```javascript
-const store = new Store({
-  userManagement: {
-    users: [...],
-    isFetching: false,
-    error: null 
+const reduceFoo = reducer => state => ({
+  ...state,
+  bar: {
+    ...state.bar,
+    foo: reducer(state.bar.foo)
   }
 });
-```
 
-Then we can make a subredcer for the `userManagement` section:
-
-```javascript
-const reduceUserManagement = reducer => state => ({
-  ...state,
-  userManagement: reducer(state.userManagement)
-});
-```
-
-After that reducing only the `userManagement` state it's easy:
-
-```javascript
-const rejectFetchingUsers = error =>
-  reduceUserManagement(state => ({ ...state, error, isFetching: false }));
+const fooAction = payload => reduceFoo(state => ({ ...state, ...payload }));
 ```
 
 ## Middlewares
@@ -160,9 +155,11 @@ import { changeName } from './actions';
 
 // ...
 
-const state = { name: 'hello' };
-const nextState = changeName('hi')(state);
-assert.strictEqual(nextState.name, 'hi');
+it('changeName', () => {
+  const state = { name: 'john' };
+  const nextState = changeName('jack')(state);
+  assert.strictEqual(nextState.name, 'jack');
+});
 ```
 
 ### Async actions
