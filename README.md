@@ -6,20 +6,19 @@
 
 The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
 
+```javascript
+dispatch(state => ({ ...state, isFetching: true }));
+```
+
 In this terminology action is a function that returns a reducer.
 
 ```javascript
-const resolveFetchingUsers = users => state => ({
+const selectUser = userId => state => ({
   ...state,
-  users,
-  isFetching: false
+  selectedUser: userId
 });
-```
 
-Following this thread an inline action looks like this:
-
-```javascript
-dispatch(state => ({ ...state, isFetching: true }))
+dispatch(selectUser(123));
 ```
 
 ## Installation
