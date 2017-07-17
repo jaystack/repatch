@@ -7,18 +7,18 @@
 The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
 
 ```javascript
-dispatch(state => ({ ...state, isFetching: true }));
+store.dispatch(state => ({ ...state, counter: state.counter + 1 }));
 ```
 
-In this terminology action is a function that returns a reducer.
+**In this terminology action is a function that returns a reducer:**
 
 ```javascript
-const selectUser = userId => state => ({
+const increment = amount => state => ({
   ...state,
-  selectedUser: userId
+  counter: state.counter + amount
 });
 
-dispatch(selectUser(123));
+store.dispatch(increment(42));
 ```
 
 ## Installation
@@ -37,7 +37,7 @@ npm install repatch
 ```javascript
 import Store from 'repatch';
 
-const store = new Store(<initialState>);
+const store = new Store(initialState);
 ```
 
 In CommonJS format you should use:
@@ -58,18 +58,22 @@ unsubscribe();
 
 ## Sub-reducers
 
-We do not need to reduce always the whole state of the store. A good practice to avoid this effort is using sub-reducers.
+We do not need to reduce always the whole state of the store. Repatch also offers a way to combine sub-reducers, those describe a deeply nested property in the state. We just define a function that takes a nested reducer as argument, and returns a reducer that reduces the whole state:
 
 ```javascript
-const reduceFoo = reducer => state => ({
+const reduceFoo = fooReducer => state => ({
   ...state,
   bar: {
     ...state.bar,
-    foo: reducer(state.bar.foo)
+    foo: fooReducer(state.bar.foo)
   }
 });
+```
 
-const fooAction = payload => reduceFoo(state => ({ ...state, ...payload }));
+Using that we can define easily an action, that sets an `x` property in the `foo` object:
+
+```javascript
+const setX = x => reduceFoo(state => ({ ...state, x }));
 ```
 
 ## Middlewares
@@ -83,7 +87,7 @@ A repatch middleware takes the store instance and the previous reducer and retur
 Use `addMiddleware` method to chaining middlewares:
 
 ```javascript
-const store = new Store(<initialState>)
+const store = new Store(initialState)
   .addMiddleware(mw1)
   .addMiddleware(mw2, mw3);
 ```
@@ -95,7 +99,7 @@ The `thunk` middleware is useful for handling async actions similar to [redux-th
 ```javascript
 import Store, { thunk } from 'repatch';
 
-const store = new Store(<initialState>).addMiddleware(thunk);
+const store = new Store(initialState).addMiddleware(thunk);
 ```
 
 In thunk async actions reducer returns a function (*delegate*):
@@ -127,7 +131,7 @@ import Store, { thunk } from 'repatch';
 import api from './api';
 import hashHistory from 'react-router';
 
-const store = new Store(<initialState>)
+const store = new Store(initialState)
   .addMiddleware(thunk.withExtraArgument({ api, hashHistory }));
 ```
 
