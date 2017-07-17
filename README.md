@@ -190,3 +190,13 @@ it('fetchUsers', async () => {
   assert.deepEqual(nextState.users, mockUsers);
 });
 ```
+
+---
+
+## License
+
+[MIT](https://spdx.org/licenses/MIT)
+
+## Developed by
+
+[![JayStack logo](http://services.jaystack.com/jaystack_logo_transparent_50.png)](http://jaystack.com/)
