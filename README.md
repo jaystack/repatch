@@ -1,4 +1,4 @@
-# Repatch
+# <a href="https://www.npmjs.com/package/repatch"><img alt="Repatch" src="http://services.jaystack.com/repatch-logo.png" height="50px"></a>
 
 ## Dispatch reducers
 
