@@ -46,7 +46,7 @@ In CommonJS format you should use:
 const Store = require('repatch').default;
 ```
 
-Repatch's interface is the same as Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).
+Repatch's interface is very similar to Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).
 
 ```javascript
 const unsubscribe = store.subscribe(() => console.log(store.getState()));
@@ -84,7 +84,7 @@ A repatch middleware takes the store instance and the previous reducer and retur
 (Store, Reducer): Reducer
 ```
 
-Use `addMiddleware` method to chaining middlewares:
+Use the `addMiddleware` method to chaining middlewares:
 
 ```javascript
 const store = new Store(initialState)
@@ -120,7 +120,7 @@ It is possible to embed async actions within each other too and awaiting their r
 await dispatch(fetchUsers());
 ```
 
-You can access `thunk` as static member of `Store` too: `Store.thunk`
+You can access `thunk` even as static member of the `Store`: `Store.thunk`
 
 ### Injecting extra argument
 
