@@ -12,6 +12,7 @@ describe('store', () => {
       assert(store.getState)
       assert(store.dispatch)
       assert(store.subscribe)
+      assert(store.addMiddleware)
     })
   })
 
