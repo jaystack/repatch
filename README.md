@@ -10,7 +10,7 @@ The simplest way to keep immutable action controlled dataflow is dispatching pur
 store.dispatch(state => ({ ...state, counter: state.counter + 1 }));
 ```
 
-**In this terminology action is a function that returns a reducer:**
+**In this terminology, an action is a function that returns a reducer:**
 
 ```javascript
 const increment = amount => state => ({
