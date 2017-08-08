@@ -1,4 +1,4 @@
-# <a href="https://www.npmjs.com/package/repatch"><img alt="Repatch" src="http://services.jaystack.com/repatch-logo.png" height="50px"></a>
+# <a href="https://www.npmjs.com/package/repatch"><img alt="Repatch" src="http://jaystack.com/wp-content/uploads/2017/08/repatch-logo.png" height="50px"></a>
 
 ## Dispatch reducers
 
@@ -184,7 +184,7 @@ const mockApi = {
 it('fetchUsers', async () => {
   const state = { users: [] };
   const store = new Store(state)
-    .addMiddleware(thunk.withExtraArgument(mockApi));
+    .addMiddleware(thunk.withExtraArgument({ api: mockApi }));
   await store.dispatch(fetchUsers());
   const nextState = store.getState();
   assert.deepEqual(nextState.users, mockUsers);
@@ -199,4 +199,4 @@ it('fetchUsers', async () => {
 
 ## Developed by
 
-[![JayStack logo](http://services.jaystack.com/jaystack_logo_transparent_50.png)](http://jaystack.com/)
+[![JayStack](http://jaystack.com/wp-content/uploads/2017/08/jaystack_logo_transparent_50.png)](http://jaystack.com/)
