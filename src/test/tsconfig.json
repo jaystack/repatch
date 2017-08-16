@@ -7,9 +7,5 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": [
-    "node_modules",
-    "config",
-    "lib"
-  ]
+  "exclude": [ "node_modules", "lib" ]
 }
