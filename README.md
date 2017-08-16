@@ -34,6 +34,10 @@ npm install --save repatch
 - [JavaScript example](https://github.com/jaystack/repatch-example-electron-app)
 - [TypeScript example](https://github.com/jaystack/repatch-example-electron-app-ts)
 
+## Articles
+
+[Repatch - the simplified Redux](https://community.risingstack.com/repatch-the-simplified-redux/)
+
 ## How to use
 
 ```javascript
