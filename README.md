@@ -24,8 +24,10 @@ store.dispatch(increment(42));
 ## Installation
 
 ```
-npm install repatch
+npm install --save repatch
 ```
+
+## [API Reference](https://github.com/jaystack/repatch/blob/master/docs/index.md)
 
 ## Examples
 
