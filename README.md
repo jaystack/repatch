@@ -84,10 +84,16 @@ const setX = x => reduceFoo(state => ({ ...state, x }));
 
 ## Middlewares
 
-A repatch middleware takes the store instance and the previous reducer and returns a new reducer:
+A repatch middleware takes the `store` instance, a `next` function and the previous `reducer`. The middleware can provide a new reducer via the `next` function.
 
 ```javascript
-(Store, Reducer): Reducer
+Middleware: Store -> (Reducer -> Reducer) -> Reducer -> any
+```
+
+where
+
+```javascript
+Next: Reducer -> Reducer
 ```
 
 Use the `addMiddleware` method to chaining middlewares:
@@ -96,6 +102,21 @@ Use the `addMiddleware` method to chaining middlewares:
 const store = new Store(initialState)
   .addMiddleware(mw1)
   .addMiddleware(mw2, mw3);
+```
+
+## Middleware example
+
+This simple logger middleware logs the current- and the next state:
+
+```javascript
+const logger = store => next => reducer => {
+  const state = store.getState()
+  const nextState = reducer(state)
+  console.log(state, nextState)
+  return next(_ => nextState)
+}
+
+const store = new Store(initialState).addMiddleware(logger)
 ```
 
 ## Async actions
