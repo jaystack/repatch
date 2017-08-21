@@ -46,11 +46,11 @@ Dispatches a reducer.
 
 #### Arguments
 
-1) **reducer** (*ReducerFunction: State -> State*): That reducer will reduce the state of the store. This takes the current state and returns the next state. The reducer will be run synchronously after applying the middlewares - if they are given.
+1) **reducer** (*ReducerFunction: State -> State*): That reducer will reduce the state of the store. This takes the current state and returns the next state.
 
 #### Returns
 
-(*ReducerFunction*): The final reducer that is made by applying the middlewares - if they are given. If the store does not have middlewares, the `dispatch` method returns the same reducer that was taken as argument.
+(*ReducerFunction*): The final reducer that is made by applying the middlewares - if they are given. If the store does enhanced with middlewares, the `dispatch` method returns the same reducer that was taken as argument.
 
 #### Example
 
@@ -66,8 +66,7 @@ console.log(result === increment) // true
 
 #### Notes
 
-1) Middlewares can modify the given reducer, so that is not guaranteed that the `dispatch` returns the original reducer that was taken as argument.
-2) The `dispatch` only runs the reducer, when the final reducer (after applying middlewares) is still a function. If the final reducer is a function, then the dispatch modifies the state by its returned value. This behaviour is strongly used by the [thunk](thunk.md) middleware, that returns the returned value of the delegate.
+Middlewares can modify the given reducer, so that is not guaranteed that the `dispatch` returns the original reducer that was taken as argument.
 
 ### `subscribe(listener)`
 
@@ -99,33 +98,32 @@ store.dispatch(increment) // listener won't be fired
 
 ### `addMiddleware(...middlewares)`
 
-Adds middleware(s) to the store.
+Enhances the store with the given middleware(s).
 
-Middlewares will be run at dispatching before the store applies the new state of the reducer. The added middlewares are composed by order of addition.
+Middlewares will be run at dispatching before the store applies the new state of the reducer. The added middlewares are composed by order of addition, so the last added middleware will run first.
 
 #### Arguments
 
-1) **...middlewares** (*MiddlewareFunction: (Store, Reducer) -> Reducer*): Middlewares as variadic arguments. Middleware functions take the `Store` instance and the dispatched reducer and return a new reducer.
+1) **...middlewares** (*MiddlewareFunction: Store -> Next -> Reducer -> any*): Middlewares as variadic arguments. Middleware functions take the `store` instance, a `next` function and the previous `reducer`. The middleware can provide a new reducer via the `next` function.
 
 #### Returns
 
-(*Store: this*): Returns the same `Store` instance for chaining.
+(*Store: this*): Returns the enhanced `Store` instance for chaining.
 
 #### Example
 
 ```javascript
-const store = new Store({ counter: 0 })
-
-const logger = (store, reducer) => {
-  const nextState = reducer(store.getState())
-  console.log(nextState)
-  return _ => nextState
+const logger = store => next => reducer => {
+  const state = store.getState()
+  const nextState = reducer(state)
+  console.log(state, nextState)
+  return next(_ => nextState)
 }
 
-store.addMiddleware(logger)
+const store = new Store({ counter: 0 }).addMiddleware(logger)
 
 store.dispatch(state => ({ counter: state.counter + 1 }))
-// logger logs { counter: 1 }
+// logger logs { counter: 0 } { counter: 1 }
 ```
 
 ## Static members

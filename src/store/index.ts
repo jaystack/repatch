@@ -10,7 +10,6 @@ export default class Store<State, R = Reducer<State>> implements IStore<State, R
 
   private state: State;
   private listeners: Function[] = [];
-  private middlewares: Function[] = [];
 
   constructor(initialState: State) {
     this.state = initialState;
@@ -43,7 +42,4 @@ export default class Store<State, R = Reducer<State>> implements IStore<State, R
     });
     return this;
   };
-
-  private applyMiddlewares = (reducer: R): R =>
-    <R>this.middlewares.reduce((prevReducer, middleware) => middleware(this, prevReducer), reducer);
 }
