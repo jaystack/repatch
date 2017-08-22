@@ -87,7 +87,7 @@ const setX = x => reduceFoo(state => ({ ...state, x }));
 A repatch middleware takes the `store` instance, a `next` function and the previous `reducer`. The middleware can provide a new reducer via the `next` function.
 
 ```javascript
-Middleware: Store -> (Reducer -> Reducer) -> Reducer -> any
+Middleware: Store -> Next -> Reducer -> any
 ```
 
 where
