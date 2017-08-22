@@ -9,7 +9,7 @@ export default class Store<State, R = Reducer<State>> implements IStore<State, R
   static thunk = thunk;
 
   private state: State;
-  private listeners: Function[] = [];
+  private listeners: Listener[] = [];
 
   constructor(initialState: State) {
     this.state = initialState;
@@ -35,11 +35,7 @@ export default class Store<State, R = Reducer<State>> implements IStore<State, R
   addMiddleware = <R2>(...middlewares: Middleware<State, R, R2>[]): Store<State, R | R2> => {
     if (middlewares.some(middleware => typeof middleware !== 'function'))
       throw new Error('Middleware is not a function: addMiddleware takes only middlewares as functions.');
-    middlewares.forEach(middleware => {
-      const prevDispatch = this.dispatch;
-      const dispatch = reducer => middleware(this)(prevDispatch)(reducer);
-      this.dispatch = dispatch;
-    });
+    middlewares.forEach(middleware => (this.dispatch = middleware(this)(this.dispatch) as any));
     return this;
   };
 }

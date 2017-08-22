@@ -22,7 +22,7 @@ export interface Middleware<State, R1, R2> {
   (store: Store<State, R1>): {
     (next: Dispatch<R1>): {
       (reducer: R2): any;
-    }
+    };
   };
 }
 
