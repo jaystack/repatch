@@ -1,26 +1,26 @@
 import { Middleware, GetState, Dispatch, Reducer, Store } from '../types';
 
-export interface ThunkMiddleware<State, ExtraArgument>
-  extends Middleware<State, Reducer<State>, Thunk<State, ExtraArgument>> {
-  (store: Store<State, Reducer<State> | Delegate<State, ExtraArgument>>): {
-    (next: Dispatch<Reducer<State>, State>): Dispatch<Delegate<State, ExtraArgument>>;
+export interface ThunkMiddleware<S, EA>
+  extends Middleware<S, Reducer<S>, Thunk<S, EA>> {
+  (store: Store<S, Reducer<S> | Delegate<S, EA>>): {
+    (next: Dispatch<Reducer<S>, S>): Dispatch<Delegate<S, EA>>;
   };
-  withExtraArgument: <EA>(extraArgument: EA) => ThunkMiddleware<State, EA>;
+  withExtraArgument: <EA>(extraArgument: EA) => ThunkMiddleware<S, EA>;
 }
 
-export interface Delegate<State, ExtraArgument, Return = any> {
-  (dispatch: ThunkDispatch<State, ExtraArgument>, getState: GetState<State>, extraArgument: ExtraArgument): Return;
+export interface Delegate<S, EA, RE = any> {
+  (dispatch: ThunkDispatch<S, EA>, getState: GetState<S>, extraArgument: EA): RE;
 }
 
-export interface Thunk<State, ExtraArgument, Return = any> {
-  (state: State): Delegate<State, ExtraArgument, Return>;
+export interface Thunk<S, EA, RE = any> {
+  (state: S): Delegate<S, EA, RE>;
 }
 
-export interface ThunkDispatch<State, ExtraArgument> extends Dispatch<Reducer<State>, State> {
-  <Return>(thunk: Thunk<State, ExtraArgument, Return>): Return;
+export interface ThunkDispatch<S, EA> extends Dispatch<Reducer<S>, S> {
+  <Return>(thunk: Thunk<S, EA, Return>): Return;
 }
 
-const thunkFactory = <State, ExtraArgument>(extraArgument?: ExtraArgument) => {
+const thunkFactory = <S, EA>(extraArgument?: EA) => {
   const thunk = (store => next => reducer => {
     if (typeof reducer !== 'function') throw new Error('Thunk requires reducers as functions');
     const state = store.getState();
@@ -30,7 +30,7 @@ const thunkFactory = <State, ExtraArgument>(extraArgument?: ExtraArgument) => {
       next(_ => result);
       return reducer;
     }
-  }) as ThunkMiddleware<State, ExtraArgument>;
+  }) as ThunkMiddleware<S, EA>;
   thunk.withExtraArgument = thunkFactory;
   return thunk;
 };
