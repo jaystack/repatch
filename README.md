@@ -21,12 +21,6 @@ const increment = amount => state => ({
 store.dispatch(increment(42));
 ```
 
-## Installation
-
-```
-npm install --save repatch
-```
-
 ## [API Reference](https://github.com/jaystack/repatch/wiki)
 
 ## Examples
@@ -37,6 +31,12 @@ npm install --save repatch
 ## Articles
 
 [Repatch - the simplified Redux](https://community.risingstack.com/repatch-the-simplified-redux/)
+
+## Installation
+
+```
+npm install --save repatch
+```
 
 ## How to use
 
