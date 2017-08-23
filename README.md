@@ -27,7 +27,7 @@ store.dispatch(increment(42));
 npm install --save repatch
 ```
 
-## [API Reference](https://github.com/jaystack/repatch/blob/master/docs/index.md)
+## [API Reference](https://github.com/jaystack/repatch/wiki)
 
 ## Examples
 
