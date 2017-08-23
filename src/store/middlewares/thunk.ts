@@ -1,38 +1,34 @@
-import { Middleware, GetState, Dispatch, Reducer, Store } from '../types';
+import { Middleware, Dispatch, GetState } from '../types';
 
-export interface ThunkMiddleware<S, EA>
-  extends Middleware<S, Reducer<S>, Thunk<S, EA>> {
-  (store: Store<S, Reducer<S> | Delegate<S, EA>>): {
-    (next: Dispatch<Reducer<S>, S>): Dispatch<Delegate<S, EA>>;
-  };
-  withExtraArgument: <EA>(extraArgument: EA) => ThunkMiddleware<S, EA>;
+export interface Delegate<S, E, R> {
+  (dispatch: Dispatch<S>, getState: GetState<S>, extraArgument: E): R;
 }
 
-export interface Delegate<S, EA, RE = any> {
-  (dispatch: ThunkDispatch<S, EA>, getState: GetState<S>, extraArgument: EA): RE;
+export interface Thunk<S, E, R> {
+  (state: S): Delegate<S, E, R>;
 }
 
-export interface Thunk<S, EA, RE = any> {
-  (state: S): Delegate<S, EA, RE>;
+declare module '../types' {
+  export interface Dispatch<S> {
+    <R, E = any>(thunk: Thunk<S, E, R>): R;
+  }
 }
 
-export interface ThunkDispatch<S, EA> extends Dispatch<Reducer<S>, S> {
-  <Return>(thunk: Thunk<S, EA, Return>): Return;
+export interface ThunkMiddleware<E> extends Middleware {
+  withExtraArgument: <E>(extraArgument: E) => ThunkMiddleware<E>;
 }
 
-const thunkFactory = <S, EA>(extraArgument?: EA) => {
+const thunkFactory = <E>(extraArgument?: E): ThunkMiddleware<E> => {
   const thunk = (store => next => reducer => {
-    if (typeof reducer !== 'function') throw new Error('Thunk requires reducers as functions');
-    const state = store.getState();
-    const result = reducer(state);
+    if (typeof reducer !== 'function') throw new Error('Thunk reducer must return a function');
+    const result = reducer(store.getState());
     if (typeof result === 'function') return result(store.dispatch, store.getState, extraArgument);
-    else {
-      next(_ => result);
-      return reducer;
-    }
-  }) as ThunkMiddleware<S, EA>;
+    else return next(_ => result);
+  }) as ThunkMiddleware<E>;
+
   thunk.withExtraArgument = thunkFactory;
+
   return thunk;
 };
 
-export default thunkFactory() as ThunkMiddleware<any, any>;
+export const thunk = thunkFactory();
