@@ -6,8 +6,8 @@ export interface Reducer<State> {
   (state: State): State;
 }
 
-export interface Dispatch<Reducer> {
-  (reducer: Reducer): Reducer;
+export interface Dispatch<Reducer, State = any> {
+  (reducer: Reducer): State;
 }
 
 export interface Listener {
@@ -20,15 +20,13 @@ export interface Unsubscribe {
 
 export interface Middleware<State, R1, R2> {
   (store: Store<State, R1>): {
-    (next: Dispatch<R1>): {
-      (reducer: R2): any;
-    };
+    (next: Dispatch<R1, State>): Dispatch<R2>;
   };
 }
 
 export interface Store<State, R = Reducer<State>> {
   getState: GetState<State>;
-  dispatch: Dispatch<R>;
+  dispatch: Dispatch<R, State>;
   subscribe(listener: Listener): Unsubscribe;
   addMiddleware<R2>(...middlewares: Middleware<State, R, R2>[]): Store<State, R | R2>;
 }

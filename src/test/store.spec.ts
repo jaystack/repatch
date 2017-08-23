@@ -36,10 +36,10 @@ describe('store', () => {
       assert.strictEqual(store.getState(), 2);
     });
 
-    it('dispatch returns the reducer', () => {
+    it('dispatch returns the new state', () => {
       const store = new Store(1);
       const reducer = state => state + 1;
-      assert.strictEqual(store.dispatch(reducer), reducer);
+      assert.strictEqual(store.dispatch(reducer), 2);
     });
   });
 

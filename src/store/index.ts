@@ -17,12 +17,12 @@ export default class Store<State, R = Reducer<State>> implements IStore<State, R
 
   getState: GetState<State> = () => this.state;
 
-  dispatch: Dispatch<R> = reducer => {
+  dispatch: Dispatch<R, State> = reducer => {
     if (typeof reducer !== 'function')
       throw new Error('Reducer is not a function: dispatch takes only reducers as functions.');
     this.state = reducer(this.state);
     this.listeners.forEach(listener => listener());
-    return <R>reducer;
+    return this.state;
   };
 
   subscribe = (listener: Listener): Unsubscribe => {
