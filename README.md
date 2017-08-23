@@ -141,8 +141,6 @@ It is possible to embed async actions within each other too and awaiting their r
 await dispatch(fetchUsers());
 ```
 
-You can access `thunk` even as static member of the `Store`: `Store.thunk`
-
 ### Injecting extra argument
 
 It is possible to inject extra arguments into async actions:
