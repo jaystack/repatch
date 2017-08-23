@@ -2,9 +2,7 @@
 
 Thunk is a repatch middleware to handle async actions. It is very similar to [redux-thunk](https://www.npmjs.com/package/redux-thunk). Thunk middleware allows you to create reducers that returns a function (delegate). The delegate will be fired at dispatching.
 
-## ThunkMiddleware
-
-`State -> Delegate`
+`Thunk: State -> Delegate`
 
 #### Example
 

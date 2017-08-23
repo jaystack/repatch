@@ -1,13 +1,13 @@
-export interface GetState<State> {
-  (): State;
+export interface GetState<S> {
+  (): S;
 }
 
-export interface Reducer<State> {
-  (state: State): State;
+export interface Reducer<S> {
+  (state: S): S;
 }
 
-export interface Dispatch<Reducer> {
-  (reducer: Reducer): Reducer;
+export interface Dispatch<S> {
+  (reducer: Reducer<S>): S;
 }
 
 export interface Listener {
@@ -18,17 +18,13 @@ export interface Unsubscribe {
   (): void;
 }
 
-export interface Middleware<State, R1, R2> {
-  (store: Store<State, R1>): {
-    (next: Dispatch<R1>): {
-      (reducer: R2): any;
-    };
-  };
+export interface Middleware {
+  <S>(store: Store<S>): (next: Dispatch<S>) => Dispatch<S>;
 }
 
-export interface Store<State, R = Reducer<State>> {
-  getState: GetState<State>;
-  dispatch: Dispatch<R>;
+export interface Store<S> {
+  getState: GetState<S>;
+  dispatch: Dispatch<S>;
   subscribe(listener: Listener): Unsubscribe;
-  addMiddleware<R2>(...middlewares: Middleware<State, R, R2>[]): Store<State, R | R2>;
+  addMiddleware(...middlewares: Middleware[]): this;
 }

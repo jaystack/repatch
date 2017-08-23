@@ -1,28 +1,24 @@
 import { Store as IStore, Listener, Unsubscribe, Middleware, Reducer, Dispatch, GetState } from './types';
-import thunk, { ThunkMiddleware } from './middlewares/thunk';
 
 export * from './types';
 export * from './middlewares/thunk';
-export { thunk };
 
-export default class Store<State, R = Reducer<State>> implements IStore<State, R> {
-  static thunk = thunk;
-
-  private state: State;
+export default class Store<S> implements IStore<S> {
+  private state: S;
   private listeners: Listener[] = [];
 
-  constructor(initialState: State) {
+  constructor(initialState: S) {
     this.state = initialState;
   }
 
-  getState: GetState<State> = () => this.state;
+  getState: GetState<S> = () => this.state;
 
-  dispatch: Dispatch<R> = reducer => {
+  dispatch: Dispatch<S> = reducer => {
     if (typeof reducer !== 'function')
       throw new Error('Reducer is not a function: dispatch takes only reducers as functions.');
     this.state = reducer(this.state);
     this.listeners.forEach(listener => listener());
-    return <R>reducer;
+    return this.state;
   };
 
   subscribe = (listener: Listener): Unsubscribe => {
@@ -32,7 +28,7 @@ export default class Store<State, R = Reducer<State>> implements IStore<State, R
     return () => (this.listeners = this.listeners.filter(lis => lis !== listener));
   };
 
-  addMiddleware = <R2>(...middlewares: Middleware<State, R, R2>[]): Store<State, R | R2> => {
+  addMiddleware = (...middlewares: Middleware[]): this => {
     if (middlewares.some(middleware => typeof middleware !== 'function'))
       throw new Error('Middleware is not a function: addMiddleware takes only middlewares as functions.');
     middlewares.forEach(middleware => (this.dispatch = middleware(this)(this.dispatch) as any));

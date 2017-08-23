@@ -90,12 +90,6 @@ A repatch middleware takes the `store` instance, a `next` function and the previ
 Middleware: Store -> Next -> Reducer -> any
 ```
 
-where
-
-```javascript
-Next: Reducer -> Reducer
-```
-
 Use the `addMiddleware` method to chaining middlewares:
 
 ```javascript
