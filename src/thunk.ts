@@ -1,4 +1,4 @@
-import { Middleware, Dispatch, GetState } from '../types';
+import { Middleware, Dispatch, GetState } from './types';
 
 export interface Delegate<S, E, R> {
   (dispatch: Dispatch<S>, getState: GetState<S>, extraArgument: E): R;
@@ -8,7 +8,7 @@ export interface Thunk<S, E, R> {
   (state: S): Delegate<S, E, R>;
 }
 
-declare module '../types' {
+declare module './types' {
   export interface Dispatch<S> {
     <R, E = any>(thunk: Thunk<S, E, R>): R;
   }

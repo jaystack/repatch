@@ -1,6 +1,6 @@
 import 'mocha';
 import * as assert from 'assert';
-import Store, { thunk } from '../store';
+import Store, { thunk } from './store';
 
 process.env.NODE_ENV = 'test';
 

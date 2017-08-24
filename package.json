@@ -2,16 +2,13 @@
   "name": "repatch",
   "version": "1.2.3",
   "description": "Dispatch reducers",
-  "main": "lib/store/index",
-  "typings": "lib/store/index",
+  "main": "lib/store",
+  "typings": "lib/store",
   "scripts": {
-    "build": "rm -rf lib && node_modules/.bin/tsc -p src/store --outDir lib/store",
-    "build:w": "node_modules/.bin/tsc -w -p src/store --outDir lib/store",
-    "build-tests": "rm -rf lib && node_modules/.bin/tsc -p src/test --outDir lib",
-    "build-tests:w": "node_modules/.bin/tsc -w -p src/test --outDir lib",
-    "pretest": "npm run build-tests",
-    "test": "node_modules/.bin/mocha lib/test/**/*.spec.js -c",
-    "start": "node ."
+    "build": "rimraf lib && node_modules/.bin/tsc",
+    "build:w": "node_modules/.bin/tsc -w",
+    "pretest": "npm run build",
+    "test": "node_modules/.bin/mocha lib/**/*.spec.js -c"
   },
   "repository": {
     "type": "git",
@@ -39,6 +36,7 @@
     "@types/mocha": "^2.2.39",
     "@types/node": "^7.0.5",
     "mocha": "^3.2.0",
+    "rimraf": "^2.6.1",
     "typescript": "^2.2.0"
   }
 }

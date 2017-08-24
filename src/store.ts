@@ -1,7 +1,7 @@
 import { Store as IStore, Listener, Unsubscribe, Middleware, Reducer, Dispatch, GetState } from './types';
 
 export * from './types';
-export * from './middlewares/thunk';
+export * from './thunk';
 
 export default class Store<S> implements IStore<S> {
   private state: S;
