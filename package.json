@@ -18,8 +18,19 @@
   "bugs": {
     "url": "https://github.com/jaystack/repatch/issues"
   },
-  "keywords": [ "dispatch", "redux", "reducer", "state", "predictable", "functional", "immutable", "flux" ],
-  "authors": [ "Péter Hauszknecht <peter.hauszknecht@jaystack.com> (https://github.com/jayhasyee)" ],
+  "keywords": [
+    "dispatch",
+    "redux",
+    "reducer",
+    "state",
+    "predictable",
+    "functional",
+    "immutable",
+    "flux"
+  ],
+  "authors": [
+    "Péter Hauszknecht <peter.hauszknecht@jaystack.com> (https://github.com/jayhasyee)"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@types/mocha": "^2.2.39",
