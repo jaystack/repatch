@@ -7,7 +7,7 @@ export interface Reducer<S> {
 }
 
 export interface Dispatch<S> {
-  (reducer: Reducer<S>): S;
+  <S>(reducer: Reducer<S>): S;
 }
 
 export interface Listener {
@@ -19,7 +19,11 @@ export interface Unsubscribe {
 }
 
 export interface Middleware {
-  <S>(store: Store<S>): (next: Dispatch<S>) => Dispatch<S>;
+  <S>(store: Store<S>): {
+    (next: Dispatch<S>): {
+      (reducer: Reducer<S>): any;
+    };
+  };
 }
 
 export interface Store<S> {
