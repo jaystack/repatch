@@ -15,7 +15,7 @@ declare module '../types' {
 }
 
 export interface ThunkMiddleware<E> extends Middleware {
-  withExtraArgument: <E>(extraArgument: E) => ThunkMiddleware<E>;
+  withExtraArgument: <EA>(extraArgument: EA) => ThunkMiddleware<EA>;
 }
 
 const thunkFactory = <E>(extraArgument?: E): ThunkMiddleware<E> => {
