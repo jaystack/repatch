@@ -123,7 +123,7 @@ describe('store', () => {
           .dispatch(trivialReducer);
       });
 
-      it('can stops the middleware chain', () => {
+      it('can stop the middleware chain', () => {
         const store = new Store(1);
         store.subscribe(() => {
           throw new Error("original dispatch shouldn't run");
