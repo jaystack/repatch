@@ -52,6 +52,12 @@ In CommonJS format you should use:
 const Store = require('repatch').default;
 ```
 
+In the browser you should use:
+
+```javascript
+var Store = Repatch.default;
+```
+
 Repatch's interface is very similar to Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).
 
 ```javascript

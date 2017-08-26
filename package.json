@@ -3,11 +3,14 @@
   "version": "1.2.5",
   "description": "Dispatch reducers",
   "main": "lib/store",
+  "browser": "dist/repatch.js",
   "typings": "lib/store",
   "scripts": {
-    "build": "rimraf lib && node_modules/.bin/tsc",
+    "build": "npm run build:node && npm run build:umd",
+    "build:node": "rimraf lib && node_modules/.bin/tsc",
+    "build:umd": "rimraf dist && node_modules/.bin/rollup -c rollup.config.js && node_modules/.bin/rollup -c rollup.config.prod.js",
     "build:w": "node_modules/.bin/tsc -w",
-    "pretest": "npm run build",
+    "pretest": "npm run build:node",
     "test": "node_modules/.bin/mocha lib/**/*.spec.js -c"
   },
   "repository": {
@@ -37,6 +40,9 @@
     "@types/node": "^7.0.5",
     "mocha": "^3.2.0",
     "rimraf": "^2.6.1",
+    "rollup": "^0.48.2",
+    "rollup-plugin-typescript2": "^0.5.2",
+    "rollup-plugin-uglify": "^2.0.1",
     "typescript": "^2.2.0"
   }
 }
