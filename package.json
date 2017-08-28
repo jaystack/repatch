@@ -13,6 +13,9 @@
     "pretest": "npm run build:node",
     "test": "node_modules/.bin/mocha lib/**/*.spec.js -c"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jaystack/repatch.git"
