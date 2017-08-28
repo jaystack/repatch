@@ -1,6 +1,6 @@
-import 'mocha';
+import 'jest';
 import * as assert from 'assert';
-import Store, { Middleware } from './store';
+import Store, { Middleware } from '../src/store';
 
 process.env.NODE_ENV = 'test';
 
@@ -8,11 +8,11 @@ describe('store', () => {
   describe('constructor', () => {
     it('creates a new instance', () => {
       const store = new Store(1);
-      assert(store);
-      assert(store.getState);
-      assert(store.dispatch);
-      assert(store.subscribe);
-      assert(store.addMiddleware);
+      assert.ok(store);
+      assert.ok(store.getState);
+      assert.ok(store.dispatch);
+      assert.ok(store.subscribe);
+      assert.ok(store.addMiddleware);
     });
   });
 
