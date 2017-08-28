@@ -6,7 +6,7 @@
 
 The simplest way to keep the immutable action controlled dataflow and define actions briefly is dispatching pure functions (as reducers) to the store.
 
-<img alt="draft" src="http://jaystack.com/wp-content/uploads/2017/08/repatch_pl-hand-d2-e1503663114155.png" style="margin: auto; width: 40%">
+<img alt="draft" src="http://jaystack.com/wp-content/uploads/2017/08/repatch_pl-hand-d2-e1503663114155.png" width="40%">
 
 ```javascript
 store.dispatch(state => ({ ...state, counter: state.counter + 1 }));
