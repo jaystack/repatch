@@ -1,5 +1,0 @@
-/node_modules
-/src
-/lib/**/*.spec.js
-/lib/**/*.spec.js.map
-/lib/**/*.spec.d.ts
