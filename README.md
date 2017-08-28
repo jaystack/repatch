@@ -46,16 +46,16 @@ import Store from 'repatch';
 const store = new Store(initialState);
 ```
 
-In CommonJS format you should use:
+Via CommonJS you should use:
 
 ```javascript
-const Store = require('repatch').default;
+const Store = require('repatch').Store;
 ```
 
 In the browser you should use:
 
 ```javascript
-var Store = Repatch.default;
+var Store = Repatch.Store;
 ```
 
 Repatch's interface is very similar to Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).

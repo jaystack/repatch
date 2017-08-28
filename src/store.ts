@@ -3,7 +3,7 @@ import { Store as IStore, Listener, Unsubscribe, Middleware, Reducer, Dispatch, 
 export * from './types';
 export * from './thunk';
 
-export default class Store<S> implements IStore<S> {
+export class Store<S> implements IStore<S> {
   private state: S;
   private listeners: Listener[] = [];
 
@@ -35,3 +35,5 @@ export default class Store<S> implements IStore<S> {
     return this;
   };
 }
+
+export default Store;
