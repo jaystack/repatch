@@ -2,9 +2,11 @@
 
 ## Dispatch reducers
 
-[Redux](https://www.npmjs.com/package/redux) has a verbose action management. The most of redux projects do not need sctrict action administration. Action types, action creators and the reducer's action handlers are mutually assigned to each other. Repatch's purpose is creating actions briefly.
+[Redux](https://www.npmjs.com/package/redux) has verbose action management. The most of redux projects do not need sctrict action administration. Action types, action creators and the reducer's action handlers are mutually assigned to each other. Repatch's purpose is creating actions briefly.
 
-The simplest way to keep immutable action controlled dataflow is dispatching pure functions (as reducers) to the store.
+The simplest way to keep the immutable action controlled dataflow and define actions briefly is dispatching pure functions (as reducers) to the store.
+
+<img alt="draft" src="http://jaystack.com/wp-content/uploads/2017/08/repatch_pl-hand-d2-e1503663114155.png" style="margin: auto; width: 40%">
 
 ```javascript
 store.dispatch(state => ({ ...state, counter: state.counter + 1 }));
@@ -40,23 +42,39 @@ npm install --save repatch
 
 ## How to use
 
+### ES6
+
 ```javascript
 import Store from 'repatch';
 
 const store = new Store(initialState);
 ```
 
-Via CommonJS you should use:
+### CommonJS
 
 ```javascript
 const Store = require('repatch').Store;
 ```
 
-In the browser you should use:
+### Bundles
+
+```html
+<script src="https://unpkg.com/repatch/dist/repatch.js"></script>
+```
+
+or the minified bundle:
+
+```html
+<script src="https://unpkg.com/repatch/dist/repatch.min.js"></script>
+```
+
+and
 
 ```javascript
-var Store = Repatch.Store;
+const Store = Repatch.Store;
 ```
+
+## Compatibility with [react-redux](https://www.npmjs.com/package/react-redux)
 
 Repatch's interface is very similar to Redux, therefore you can use with [react-redux](https://www.npmjs.com/package/react-redux).
 
@@ -70,7 +88,7 @@ unsubscribe();
 
 ## Sub-reducers
 
-We do not need to reduce always the whole state of the store. Repatch also offers a way to combine sub-reducers, those describe a deeply nested property in the state. We just define a function that takes a nested reducer as argument, and returns a reducer that reduces the whole state:
+We do not need to reduce always the whole state of the store. Repatch also offers a way to combine sub-reducers, those describe a deeply nested property in the state. We just define a helper function that takes a nested reducer as argument, and returns a reducer that reduces the whole state:
 
 ```javascript
 const reduceFoo = fooReducer => state => ({
@@ -133,11 +151,16 @@ In thunk async actions reducer returns a function (*delegate*):
 
 ```javascript
 const updateUser = delta => state => async (dispatch, getState) => {
-  const editedUserId = getState().editedUser;
-  dispatch(toggleSpinner(true));
-  await api.updateUser(editedUserId, delta);
-  await dispatch(fetchUsers());
-  dispatch(toggleSpinner(false));
+  try {
+    const editedUserId = getState().editedUser;
+    dispatch(toggleSpinner(true));
+    await api.updateUser(editedUserId, delta);
+    await dispatch(fetchUsers());
+  } catch (error) {
+    dispatch(state => ({ ...state, error: error.message }))
+  } finally {
+    dispatch(toggleSpinner(false));
+  }
 };
 ```
 
@@ -169,13 +192,13 @@ const updateUser = delta => state =>
   }
 ```
 
-This way you can keep your async actions independently from outer instances. This practice is useful for testing.
+This way you can keep your async actions independently from outer instances or side-effects. This practice is useful for testing.
 
 ## Testing
 
 ### Sync actions
 
-Sync actions' testing is easy:
+Testing a reducer is easy:
 
 ```javascript
 import * as assert from 'assert';
@@ -192,7 +215,7 @@ it('changeName', () => {
 
 ### Async actions
 
-For async action tests you need to instantiate the `Store`:
+For async action tests you need to instantiate the `Store` and provide mocked extra arguments.
 
 ```javascript
 import Store, { thunk } from 'repatch';
@@ -221,6 +244,10 @@ it('fetchUsers', async () => {
 ## License
 
 [MIT](https://spdx.org/licenses/MIT)
+
+## Community
+
+[https://twitter.com/repatchjs](https://twitter.com/repatchjs)
 
 ## Developed by
 
