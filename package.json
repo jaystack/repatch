@@ -15,6 +15,7 @@
     "publish": "npm run build && npm publish"
   },
   "files": [
+    "lib",
     "dist"
   ],
   "repository": {
