@@ -11,7 +11,8 @@
     "build:umd": "rimraf dist && node_modules/.bin/rollup -c rollup.config.js && node_modules/.bin/rollup -c rollup.config.prod.js",
     "build:w": "node_modules/.bin/tsc -w",
     "pretest": "npm run build:node",
-    "test": "node_modules/.bin/mocha lib/**/*.spec.js -c"
+    "test": "node_modules/.bin/mocha lib/**/*.spec.js -c",
+    "publish": "npm run build && npm publish"
   },
   "files": [
     "dist"
