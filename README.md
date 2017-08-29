@@ -2,9 +2,7 @@
 
 ## Dispatch reducers
 
-[Redux](https://www.npmjs.com/package/redux) has verbose action management. The most of redux projects do not need sctrict action administration. Action types, action creators and the reducer's action handlers are mutually assigned to each other. Repatch's purpose is creating actions briefly.
-
-The simplest way to keep the immutable action controlled dataflow and define actions briefly is dispatching pure functions (as reducers) to the store.
+[Repatch](https://www.npmjs.com/package/repatch) is just a simplfied [Redux](https://www.npmjs.com/package/redux), that let you create actions more briefly by dispatching reducers directly.
 
 <img alt="draft" src="http://jaystack.com/wp-content/uploads/2017/08/repatch_pl-hand-d2-e1503663114155.png" width="40%">
 
@@ -22,6 +20,12 @@ const increment = amount => state => ({
 
 store.dispatch(increment(42));
 ```
+
+## Motivation
+
+[Redux](https://www.npmjs.com/package/redux) has verbose action management. The most of redux projects do not need sctrict action administration. Action types, action creators and the reducer's action handlers are mutually assigned to each other. Repatch's purpose is creating actions briefly.
+
+The simplest way to keep the immutable action controlled dataflow and define actions briefly is dispatching pure functions (as reducers) to the store.
 
 ## [API Reference](https://github.com/jaystack/repatch/wiki)
 
