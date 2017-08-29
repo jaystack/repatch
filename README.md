@@ -177,7 +177,7 @@ It is possible to inject extra arguments into async actions:
 ```javascript
 import Store, { thunk } from 'repatch';
 import api from './api';
-import hashHistory from 'react-router';
+import { hashHistory } from 'react-router';
 
 const store = new Store(initialState)
   .addMiddleware(thunk.withExtraArgument({ api, hashHistory }));
