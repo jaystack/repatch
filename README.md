@@ -90,6 +90,24 @@ store.dispatch(resolveFetchingUsers(users));
 unsubscribe();
 ```
 
+## TODO example in brief
+
+```javascript
+const store = new Store([]);
+
+const addTodo = text => todos => [...todos, { text, checked: false }];
+
+const checkTodo = index => todos => todos.map(
+  (todo, i) => (i === index ? { ...todo, checked: !todo.checked } : todo)
+);
+
+const editTodo = (index, text) => todos => todos.map(
+  (todo, i) => (i === index ? { ...todo, text } : todo)
+);
+
+const removeTodo = index => todos => todos.filter((_, i) => i !== index);
+```
+
 ## Sub-reducers
 
 We do not need to reduce always the whole state of the store. Repatch also offers a way to combine sub-reducers, those describe a deeply nested property in the state. We just define a helper function that takes a nested reducer as argument, and returns a reducer that reduces the whole state:
