@@ -90,7 +90,7 @@ store.dispatch(resolveFetchingUsers(users));
 unsubscribe();
 ```
 
-## TODO example in brief
+## TODO app in brief
 
 ```javascript
 const store = new Store([]);
