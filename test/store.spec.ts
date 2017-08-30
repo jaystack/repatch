@@ -41,6 +41,25 @@ describe('store', () => {
       const reducer = state => state + 1;
       assert.strictEqual(store.dispatch(reducer), 2);
     });
+
+    it('cannot not be fired via dispatching', () => {
+      const store = new Store(5);
+      store.dispatch(state => {
+        assert.throws(() => store.dispatch(state => 0));
+        return state;
+      });
+    });
+
+    it('allows to dispatch after throwed dispatching', () => {
+      const store = new Store(1);
+      assert.throws(() =>
+        store.dispatch(state => {
+          throw new Error();
+        })
+      );
+      store.dispatch(state => state + 1);
+      assert.strictEqual(store.getState(), 2);
+    });
   });
 
   describe('subscribe', () => {

@@ -6,6 +6,7 @@ export * from './thunk';
 export class Store<S> implements IStore<S> {
   private state: S;
   private listeners: Listener[] = [];
+  private isDispatching: boolean = false;
 
   constructor(initialState: S) {
     this.state = initialState;
@@ -16,7 +17,13 @@ export class Store<S> implements IStore<S> {
   dispatch: Dispatch<S> = reducer => {
     if (typeof reducer !== 'function')
       throw new Error('Reducer is not a function: dispatch takes only reducers as functions.');
-    this.state = reducer(this.state);
+    if (this.isDispatching) throw new Error('Reducers may not dispatch actions.');
+    this.isDispatching = true;
+    try {
+      this.state = reducer(this.state);
+    } finally {
+      this.isDispatching = false;
+    }
     this.listeners.forEach(listener => listener());
     return this.state;
   };
