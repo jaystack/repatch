@@ -1,6 +1,6 @@
 {
   "name": "repatch",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Dispatch reducers",
   "main": "lib/store",
   "browser": "dist/repatch.js",
