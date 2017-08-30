@@ -2,7 +2,7 @@
 
 ## Dispatch reducers
 
-[Repatch](https://www.npmjs.com/package/repatch) is just a simplfied [Redux](https://www.npmjs.com/package/redux), that let you create actions more briefly by dispatching reducers directly.
+[Repatch](https://www.npmjs.com/package/repatch) is just a simplified [Redux](https://www.npmjs.com/package/redux), that let you create actions more briefly by dispatching reducers directly.
 
 <img alt="draft" src="http://jaystack.com/wp-content/uploads/2017/08/repatch_pl-hand-d2-e1503663114155.png" width="40%">
 
