@@ -7,7 +7,7 @@ export interface Reducer<S> {
 }
 
 export interface Dispatch<S> {
-  <S>(reducer: Reducer<S>): S;
+  (reducer: Reducer<S>): S;
 }
 
 export interface Listener {
