@@ -27,6 +27,15 @@ store.dispatch(increment(42));
 
 The simplest way to keep the immutable action controlled dataflow and define actions briefly is dispatching pure functions (as reducers) to the store.
 
+## Comparison with [Redux](https://www.npmjs.com/package/redux)
+
+Repatch is
+- **less verbose**
+- **3X smaller** (the minified version is __less then 1 KB__)
+- [**9X faster**](https://github.com/jaystack/redux-repatch-performance-comparison)
+
+then Redux.
+
 ## [API Reference](https://github.com/jaystack/repatch/wiki)
 
 ## Examples
