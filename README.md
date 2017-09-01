@@ -36,6 +36,10 @@ Repatch is
 
 then Redux.
 
+## Working with [Redux](https://www.npmjs.com/package/redux)
+
+If you have to keep the official Redux in your project, then you can use the [redux-repatch](https://www.npmjs.com/package/redux-repatch) or [redux-repatch-creator](https://www.npmjs.com/package/redux-repatch-creator) enhancers.
+
 ## [API Reference](https://github.com/jaystack/repatch/wiki)
 
 ## Examples
