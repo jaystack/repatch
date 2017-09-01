@@ -69,7 +69,7 @@ const store = new Store(initialState);
 const Store = require('repatch').Store;
 ```
 
-### Bundles
+### UMD
 
 ```html
 <script src="https://unpkg.com/repatch/dist/repatch.js"></script>
@@ -85,6 +85,7 @@ and
 
 ```javascript
 const Store = Repatch.Store;
+const thunk = Repatch.thunk;
 ```
 
 ## Compatibility with [react-redux](https://www.npmjs.com/package/react-redux)
