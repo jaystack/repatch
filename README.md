@@ -34,7 +34,7 @@ Repatch is
 - **3X smaller** (the minified version is __less then 1 KB__)
 - [**9X faster**](https://github.com/jaystack/redux-repatch-performance-comparison)
 
-then Redux.
+than Redux.
 
 ## Working with [Redux](https://www.npmjs.com/package/redux)
 
