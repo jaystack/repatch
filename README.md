@@ -31,7 +31,7 @@ The simplest way to keep the immutable action controlled dataflow and define act
 
 Repatch is
 - **less verbose**
-- **3X smaller** (the minified version is __less then 1 KB__)
+- **3X smaller** (the minified version is __less than 1 KB__)
 - [**9X faster**](https://github.com/jaystack/redux-repatch-performance-comparison)
 
 then Redux.
