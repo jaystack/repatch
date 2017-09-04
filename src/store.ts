@@ -24,7 +24,8 @@ export class Store<S> implements IStore<S> {
     } finally {
       this.isDispatching = false;
     }
-    this.listeners.forEach(listener => listener());
+    for (let i = 0; i<this.listeners.length; ++i)
+      this.listeners[i]();
     return this.state;
   };
 
