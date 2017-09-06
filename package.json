@@ -16,7 +16,8 @@
   },
   "files": [
     "lib",
-    "dist"
+    "dist",
+    "LICENSE.md"
   ],
   "repository": {
     "type": "git",
