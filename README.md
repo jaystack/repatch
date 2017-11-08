@@ -1,5 +1,9 @@
 # <a href="https://www.npmjs.com/package/repatch"><img alt="Repatch" src="http://jaystack.com/wp-content/uploads/2017/08/repatch-logo.png" height="50px"></a>
 
+[![npm version](https://img.shields.io/npm/v/repatch.svg?style=flat-square)](https://www.npmjs.com/package/repatch)
+[![npm downloads](https://img.shields.io/npm/dm/repatch.svg?style=flat-square)](https://www.npmjs.com/package/repatch)
+[![corp-check status](https://api.corp-check.corpjs.com/badge?name=repatch)](https://corp-check.corpjs.com/result?name=repatch)
+
 ## Dispatch reducers
 
 [Repatch](https://www.npmjs.com/package/repatch) is just a simplified [Redux](https://www.npmjs.com/package/redux), that let you create actions more briefly by dispatching reducers directly.
